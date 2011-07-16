@@ -1,6 +1,7 @@
 package info.sunng.stages;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * User: Sun Ning<classicning@gmail.com>
@@ -11,10 +12,10 @@ public abstract class AbstractRetryableTask extends AbstractTask{
 
     private boolean retry;
 
-    private int executeTimes = 0;
+    private AtomicInteger executeTimes = new AtomicInteger(0);
 
     public int getRetryTimes() {
-        return executeTimes - 1;
+        return executeTimes.intValue() - 1;
     }
 
     public boolean isRetry() {
@@ -37,7 +38,7 @@ public abstract class AbstractRetryableTask extends AbstractTask{
     @Override
     protected void onTaskStart() {
         super.onTaskStart();
-        executeTimes++;
+        executeTimes.incrementAndGet();
         // clear retry state
         setRetry(false);
     }

@@ -61,6 +61,7 @@ public class DefaultStage implements Stage {
         if (!this.isStarted()) {
             this.setStarted(true);
         }
+
     }
 
     @Override

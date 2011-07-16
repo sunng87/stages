@@ -22,6 +22,7 @@ public class DefaultStageManager implements StageManager {
     public void register(Stage stage) {
         stages.put(stage.getName(), stage);
         stage.setStageManager(this);
+        stage.init();
     }
 
     @Override
@@ -32,6 +33,7 @@ public class DefaultStageManager implements StageManager {
 
     @Override
     public void register(String name, ThreadPoolPolicy threadPoolPolicy) {
+        threadPoolPolicy.setName(name);
         Stage stage = new DefaultStage(name, threadPoolPolicy.getThreadPool());
         this.register(stage);
     }
@@ -53,7 +55,7 @@ public class DefaultStageManager implements StageManager {
     }
 
     @Override
-    public void shutdown() {
+    public synchronized void shutdown() {
         for (Stage stage: stages.values()) {
             stage.stop();
         }

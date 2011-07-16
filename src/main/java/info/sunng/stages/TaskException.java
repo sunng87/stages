@@ -6,4 +6,9 @@ package info.sunng.stages;
  * Time: 10:44 AM
  */
 public class TaskException extends Exception {
+
+    public TaskException(Exception e) {
+        super(e);
+    }
+
 }
