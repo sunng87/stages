@@ -11,6 +11,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class DefaultStage implements Stage {
 
+    private StageManager stageManager;
+
     private boolean started;
 
     private String name;
@@ -91,5 +93,15 @@ public class DefaultStage implements Stage {
     @Override
     public void taskComplete() {
         taskCount.decrementAndGet();
+    }
+
+    @Override
+    public StageManager getStageManager() {
+        return stageManager;
+    }
+
+    @Override
+    public void setStageManager(StageManager manager) {
+        this.stageManager = manager;
     }
 }

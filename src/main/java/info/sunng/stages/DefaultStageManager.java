@@ -1,10 +1,10 @@
 package info.sunng.stages;
 
+import info.sunng.stages.threads.NamedThreadFactory;
 import info.sunng.stages.threads.ThreadPoolPolicy;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.*;
 
 /**
  * User: Sun Ning<classicning@gmail.com>
@@ -12,6 +12,9 @@ import java.util.concurrent.ExecutorService;
  * Time: 6:23 PM
  */
 public class DefaultStageManager implements StageManager {
+
+    private ScheduledExecutorService retryScheduler
+            = Executors.newScheduledThreadPool(1, new NamedThreadFactory("RetryPool"));
 
     private Map<String, Stage> stages = new ConcurrentHashMap<String, Stage>();
 
@@ -53,5 +56,10 @@ public class DefaultStageManager implements StageManager {
         for (Stage stage: stages.values()) {
             stage.stop();
         }
+    }
+
+    @Override
+    public ScheduledExecutorService getRetrySchduler() {
+        return retryScheduler;
     }
 }

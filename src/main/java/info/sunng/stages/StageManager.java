@@ -3,6 +3,8 @@ package info.sunng.stages;
 import info.sunng.stages.threads.ThreadPoolPolicy;
 
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 /**
  * User: Sun Ning<classicning@gmail.com>
@@ -22,5 +24,7 @@ public interface StageManager {
     public void start();
 
     public void shutdown();
+
+    public ScheduledExecutorService getRetrySchduler();
 
 }

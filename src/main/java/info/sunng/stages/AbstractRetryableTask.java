@@ -1,5 +1,7 @@
 package info.sunng.stages;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * User: Sun Ning<classicning@gmail.com>
  * Date: 7/16/11
@@ -9,10 +11,10 @@ public abstract class AbstractRetryableTask extends AbstractTask{
 
     private boolean retry;
 
-    private int retryTimes;
+    private int executeTimes = 0;
 
     public int getRetryTimes() {
-        return retryTimes;
+        return executeTimes - 1;
     }
 
     public boolean isRetry() {
@@ -28,12 +30,29 @@ public abstract class AbstractRetryableTask extends AbstractTask{
     protected abstract int getMaxRetryTimes();
 
     @Override
+    protected void onTaskStart() {
+        super.onTaskStart();
+        if (isRetry()) {
+            executeTimes++;
+        }
+    }
+
+    @Override
     protected void onTaskFailure(TaskException e) {
         super.onTaskFailure(e);
-        if (retry) {
+        if (isRetry()) {
             if (getRetryTimes() < getMaxRetryTimes()) {
-                // TODO schedule a retry
+                getCurrentStage().getStageManager().getRetrySchduler()
+                        .schedule(new RetryTaskWrapper(this),
+                                getNextRetryDelay(), TimeUnit.MILLISECONDS);
+            } else {
+                if (logger != null && logger.isDebugEnabled()) {
+                    logger.debug("Max retry exceeds, {0}", this);
+                }
+                onMaxRetryExceed();
             }
         }
     }
+
+    protected void onMaxRetryExceed() {}
 }

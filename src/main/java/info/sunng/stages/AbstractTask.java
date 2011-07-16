@@ -17,6 +17,7 @@ public abstract class AbstractTask implements Task{
 
     @Override
     public void run() {
+        onTaskStart();
         try {
             doRun();
         } catch (TaskException e) {
@@ -32,6 +33,8 @@ public abstract class AbstractTask implements Task{
     protected abstract void doRun() throws TaskException ;
 
     protected void onTaskFailure(TaskException e) {}
+
+    protected void onTaskStart() {}
 
     public void setLogger(Logger logger) {
         this.logger = logger;

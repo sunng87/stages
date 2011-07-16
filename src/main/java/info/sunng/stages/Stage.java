@@ -44,4 +44,16 @@ public interface Stage {
      * call this when task complete
      */
     public void taskComplete();
+
+    /**
+     *
+     * @return
+     */
+    public StageManager getStageManager();
+
+    /**
+     *
+     * @param manager
+     */
+    public void setStageManager(StageManager manager);
 }
