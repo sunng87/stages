@@ -6,4 +6,11 @@ package info.sunng.stages;
  * Time: 10:40 AM
  */
 public interface Task extends Runnable {
+
+    /**
+     *
+     * @param stage
+     */
+    public void setCurrentStage(Stage stage);
+
 }

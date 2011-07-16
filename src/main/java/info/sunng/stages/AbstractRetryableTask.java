@@ -28,8 +28,8 @@ public abstract class AbstractRetryableTask extends AbstractTask{
     protected abstract int getMaxRetryTimes();
 
     @Override
-    protected void onTaskFailure() {
-        super.onTaskFailure();
+    protected void onTaskFailure(TaskException e) {
+        super.onTaskFailure(e);
         if (retry) {
             if (getRetryTimes() < getMaxRetryTimes()) {
                 // TODO schedule a retry

@@ -23,25 +23,25 @@ public abstract class AbstractTask implements Task{
             if (logger != null && logger.isDebugEnabled()) {
                 logger.debug("Error execute task", e);
             }
-            onTaskFailure();
+            onTaskFailure(e);
         } finally {
-            getStage().taskComplete();
+            getCurrentStage().taskComplete();
         }
     }
 
     protected abstract void doRun() throws TaskException ;
 
-    protected void onTaskFailure() {}
+    protected void onTaskFailure(TaskException e) {}
 
     public void setLogger(Logger logger) {
         this.logger = logger;
     }
 
-    public Stage getStage() {
+    public Stage getCurrentStage() {
         return stage;
     }
 
-    public void setStage(Stage stage) {
+    public void setCurrentStage(Stage stage) {
         this.stage = stage;
     }
 }

@@ -73,6 +73,7 @@ public class DefaultStage implements Stage {
         }
 
         taskCount.incrementAndGet();
+        t.setCurrentStage(this);
 
         getThreadPool().submit(t);
     }
