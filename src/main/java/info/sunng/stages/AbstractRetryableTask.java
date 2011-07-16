@@ -25,6 +25,11 @@ public abstract class AbstractRetryableTask extends AbstractTask{
         this.retry = retry;
     }
 
+    /**
+     * override this method to specify retry delay
+     *
+     * @return time for next retry delay, in millseconds
+     */
     protected abstract int getNextRetryDelay();
 
     protected abstract int getMaxRetryTimes();
@@ -32,14 +37,25 @@ public abstract class AbstractRetryableTask extends AbstractTask{
     @Override
     protected void onTaskStart() {
         super.onTaskStart();
-        if (isRetry()) {
-            executeTimes++;
-        }
+        executeTimes++;
+        // clear retry state
+        setRetry(false);
     }
 
     @Override
     protected void onTaskFailure(TaskException e) {
         super.onTaskFailure(e);
+        checkToRetry();
+    }
+
+    @Override
+    protected void onTaskSuccess() {
+        super.onTaskSuccess();
+        // also check if retry is set
+        checkToRetry();
+    }
+
+    private void checkToRetry() {
         if (isRetry()) {
             if (getRetryTimes() < getMaxRetryTimes()) {
                 getCurrentStage().getStageManager().getRetrySchduler()

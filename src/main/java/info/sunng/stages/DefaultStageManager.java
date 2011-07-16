@@ -21,6 +21,7 @@ public class DefaultStageManager implements StageManager {
     @Override
     public void register(Stage stage) {
         stages.put(stage.getName(), stage);
+        stage.setStageManager(this);
     }
 
     @Override
@@ -56,6 +57,7 @@ public class DefaultStageManager implements StageManager {
         for (Stage stage: stages.values()) {
             stage.stop();
         }
+        stages.clear();
     }
 
     @Override

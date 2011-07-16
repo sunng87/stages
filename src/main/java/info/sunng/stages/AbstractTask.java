@@ -20,6 +20,7 @@ public abstract class AbstractTask implements Task{
         onTaskStart();
         try {
             doRun();
+            onTaskSuccess();
         } catch (TaskException e) {
             if (logger != null && logger.isDebugEnabled()) {
                 logger.debug("Error execute task", e);
@@ -33,6 +34,8 @@ public abstract class AbstractTask implements Task{
     protected abstract void doRun() throws TaskException ;
 
     protected void onTaskFailure(TaskException e) {}
+
+    protected void onTaskSuccess() {}
 
     protected void onTaskStart() {}
 
