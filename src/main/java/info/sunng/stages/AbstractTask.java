@@ -2,6 +2,7 @@ package info.sunng.stages;
 
 import org.slf4j.Logger;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,6 +65,11 @@ public abstract class AbstractTask implements Task, TaskContext {
                 taskWithContext.setAttribute(key, this.getAttribute(key, Object.class));
             }
         }
+    }
+
+    @Override
+    public Collection<String> getAttributeNames() {
+        return taskContext.keySet();
     }
 
     @Override
