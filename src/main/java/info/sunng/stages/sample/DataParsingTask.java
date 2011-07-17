@@ -10,6 +10,7 @@ import info.sunng.stages.TaskException;
 
 import java.io.FileReader;
 import java.io.InputStream;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * User: Sun Ning<classicning@gmail.com>
@@ -48,6 +49,6 @@ public class DataParsingTask extends AbstractTask {
     @Override
     protected void onTaskSuccess() {
         super.onTaskSuccess();
-        Main.COUNT_DOWN_LATCH.countDown();
+        getAttribute(Main.COUNT_DOWN_LATCH, CountDownLatch.class).countDown();
     }
 }

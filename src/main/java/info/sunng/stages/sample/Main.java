@@ -21,9 +21,9 @@ public class Main {
 
     public static final String URL_TEMPLATE = "http://api.douban.com/book/subject/";
 
-    public static final int TASK_COUNT = 20;
+    public static final String COUNT_DOWN_LATCH = "countDownLatch";
 
-    public static final CountDownLatch COUNT_DOWN_LATCH = new CountDownLatch(TASK_COUNT);
+    public static final int TASK_COUNT = 20;
 
     public static StageManager setUpStages() {
         StageManager sm = new DefaultStageManager();
@@ -37,6 +37,7 @@ public class Main {
 
     public static void main(String args[]) {
         StageManager sm = setUpStages();
+        CountDownLatch cdl = new CountDownLatch(TASK_COUNT);
 
         int idCodeBase = 6397550;
         for (int i=0; i<TASK_COUNT; i++){
@@ -44,11 +45,12 @@ public class Main {
             String url = URL_TEMPLATE + code;
 
             URLDownloadTask task = new URLDownloadTask(url);
+            task.setAttribute(COUNT_DOWN_LATCH, cdl);
             sm.getStage(DOWNLOADER_STAGE).assign(task);
         }
 
         try {
-            COUNT_DOWN_LATCH.await();
+            cdl.await();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
