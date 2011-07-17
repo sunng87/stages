@@ -50,4 +50,8 @@ public abstract class AbstractTask implements Task{
     public void setCurrentStage(Stage stage) {
         this.stage = stage;
     }
+
+    protected void forward(String stageName, Task task) {
+        getCurrentStage().getStageManager().getStage(stageName).assign(task);
+    }
 }

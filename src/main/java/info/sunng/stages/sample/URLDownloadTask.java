@@ -46,7 +46,7 @@ public class URLDownloadTask extends AbstractRetryableTask {
 //            copyIO(dataIn, sw);
 
             DataParsingTask task = new DataParsingTask(dataIn);
-            getCurrentStage().getStageManager().getStage(Main.PARSER_STAGE).assign(task);
+            forward(Main.PARSER_STAGE, task);
             System.out.println("Finished retriving: " + url);
         } catch (MalformedURLException e) {
             throw new TaskException(e);
