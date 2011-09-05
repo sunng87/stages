@@ -18,6 +18,8 @@ public class DefaultStageManager implements StageManager {
 
     private Map<String, Stage> stages = new ConcurrentHashMap<String, Stage>();
 
+    private boolean started;
+
     @Override
     public void register(Stage stage) {
         stages.put(stage.getName(), stage);
@@ -52,6 +54,7 @@ public class DefaultStageManager implements StageManager {
         for (Stage stage: stages.values()) {
             stage.start();
         }
+        started = true;
     }
 
     @Override
@@ -60,10 +63,16 @@ public class DefaultStageManager implements StageManager {
             stage.stop();
         }
         stages.clear();
+        started = false;
     }
 
     @Override
     public ScheduledExecutorService getRetrySchduler() {
         return retryScheduler;
+    }
+
+    @Override
+    public boolean isStarted() {
+        return started;
     }
 }

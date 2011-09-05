@@ -27,4 +27,6 @@ public interface StageManager {
 
     public ScheduledExecutorService getRetrySchduler();
 
+    public boolean isStarted();
+
 }
