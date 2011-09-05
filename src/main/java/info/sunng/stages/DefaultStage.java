@@ -75,6 +75,10 @@ public class DefaultStage implements Stage {
             return ;
         }
 
+        if (! this.isStarted()) {
+            throw new IllegalStateException("Stage " + name + " is inactive.");
+        }
+
         taskCount.incrementAndGet();
         t.setCurrentStage(this);
 

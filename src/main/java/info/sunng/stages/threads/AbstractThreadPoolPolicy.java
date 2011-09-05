@@ -12,7 +12,7 @@ public abstract class AbstractThreadPoolPolicy implements ThreadPoolPolicy{
     @Override
     public void setName(String name) {
         this.name = name;
-    };
+    }
 
     public String getName(){
         return this.name;
