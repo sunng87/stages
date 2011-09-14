@@ -2,9 +2,9 @@ package info.sunng.stages;
 
 import info.sunng.stages.threads.ThreadPoolPolicy;
 
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 /**
  * User: Sun Ning<classicning@gmail.com>
@@ -20,6 +20,8 @@ public interface StageManager {
     public void register(String name, ThreadPoolPolicy threadPoolPolicy);
 
     public Stage getStage(String name);
+
+    public List<Stage> getStages();
 
     public void start();
 

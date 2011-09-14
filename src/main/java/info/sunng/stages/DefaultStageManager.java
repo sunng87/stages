@@ -3,6 +3,8 @@ package info.sunng.stages;
 import info.sunng.stages.threads.NamedThreadFactory;
 import info.sunng.stages.threads.ThreadPoolPolicy;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 
@@ -47,6 +49,11 @@ public class DefaultStageManager implements StageManager {
         } else {
             throw new IllegalStateException("No such stage: " + name);
         }
+    }
+
+    @Override
+    public List<Stage> getStages() {
+        return new ArrayList<Stage>(stages.values());
     }
 
     @Override
