@@ -21,6 +21,8 @@ public abstract class AbstractTask implements Task, TaskContext {
 
     Stage stage;
 
+    private TaskCallback callback = null;
+
     @Override
     public void run() {
         onTaskStart();
@@ -35,6 +37,16 @@ public abstract class AbstractTask implements Task, TaskContext {
         } finally {
             getCurrentStage().taskComplete();
         }
+    }
+
+    protected void fireFinished() {
+        if (this.callback != null) {
+            this.callback.onFinished(this);
+        }
+    }
+
+    public void setCallback(TaskCallback c) {
+        this.callback = c;
     }
 
     protected abstract void doRun() throws TaskException ;
