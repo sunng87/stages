@@ -83,6 +83,7 @@ public class DefaultStage implements Stage {
         t.setCurrentStage(this);
 
         getThreadPool().submit(t);
+
     }
 
     @Override

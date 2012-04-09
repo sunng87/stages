@@ -24,7 +24,7 @@ public class URLDownloadTask extends AbstractRetryableTask {
     }
 
     @Override
-    protected int getNextRetryDelay() {
+    protected long getNextRetryDelay() {
         return 500;
     }
 

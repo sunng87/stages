@@ -12,10 +12,10 @@ public abstract class AbstractRetryableTask extends AbstractTask{
 
     private boolean retry;
 
-    private AtomicInteger executeTimes = new AtomicInteger(0);
+    private AtomicInteger executeTimes = new AtomicInteger(-1);
 
     public int getRetryTimes() {
-        return executeTimes.intValue() - 1;
+        return executeTimes.intValue();
     }
 
     public boolean isRetry() {
@@ -31,7 +31,7 @@ public abstract class AbstractRetryableTask extends AbstractTask{
      *
      * @return time for next retry delay, in millseconds
      */
-    protected abstract int getNextRetryDelay();
+    protected abstract long getNextRetryDelay();
 
     protected abstract int getMaxRetryTimes();
 
