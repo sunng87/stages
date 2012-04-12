@@ -36,8 +36,11 @@ public abstract class AbstractTask implements Task, TaskContext {
             onTaskFailure(new TaskException(e));
         } finally {
             getCurrentStage().taskComplete();
+            onTaskFinished();
         }
     }
+
+    protected abstract void onTaskFinished();
 
     protected void fireFinished() {
         if (this.callback != null) {
