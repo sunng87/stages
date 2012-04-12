@@ -29,11 +29,11 @@ public abstract class AbstractTask implements Task, TaskContext {
         try {
             doRun();
             onTaskSuccess();
-        } catch (TaskException e) {
+        } catch (Exception e) {
             if (logger != null && logger.isDebugEnabled()) {
                 logger.debug("Error execute task", e);
             }
-            onTaskFailure(e);
+            onTaskFailure(new TaskException(e));
         } finally {
             getCurrentStage().taskComplete();
         }
@@ -49,7 +49,7 @@ public abstract class AbstractTask implements Task, TaskContext {
         this.callback = c;
     }
 
-    protected abstract void doRun() throws TaskException ;
+    protected abstract void doRun() throws Exception ;
 
     protected void onTaskFailure(TaskException e) {}
 
