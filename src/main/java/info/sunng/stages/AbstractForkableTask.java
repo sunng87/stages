@@ -24,6 +24,7 @@ public abstract class AbstractForkableTask extends AbstractTask {
 
         subTaskList = new ArrayList<AbstractForkedSubTask>(taskCount.intValue());
         for (AbstractForkedSubTask subTask : tasks) {
+            subTask.setParentTask(this);
             subTaskList.add(subTask);
         }
 
