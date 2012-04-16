@@ -1,9 +1,6 @@
 package info.sunng.stages.transaction;
 
-import com.sun.corba.se.spi.ior.ObjectKey;
 import info.sunng.stages.AbstractTask;
-
-import java.util.Set;
 
 /**
  * Transaction task for non-blocking, asynchronized style task.
