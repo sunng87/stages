@@ -40,7 +40,7 @@ public abstract class AbstractTask implements Task, TaskContext {
         }
     }
 
-    protected abstract void onTaskFinished();
+    protected void onTaskFinished(){};
 
     protected void fireFinished() {
         if (this.callback != null) {
