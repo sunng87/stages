@@ -5,7 +5,7 @@ package info.sunng.stages;
  * Date: 4/9/12
  * Time: 3:51 PM
  */
-public abstract class PromiseTask<T> extends AbstractTask {
+public abstract class AbstractPromiseTask<T> extends AbstractTask {
 
     private Promise<T> promise = null ;
 
@@ -25,12 +25,12 @@ public abstract class PromiseTask<T> extends AbstractTask {
 
     @Override
     protected void forward(String stageName, Task task) {
-        if (!(task instanceof PromiseTask)) {
-            throw new IllegalStateException("If you forward to a non-PromiseTask, your promise will lost.");
+        if (!(task instanceof AbstractPromiseTask)) {
+            throw new IllegalStateException("If you forward to a non-AbstractPromiseTask, your promise will lost.");
         }
 
         super.forward(stageName, task);
-        ((PromiseTask)task).setPromise(promise);
+        ((AbstractPromiseTask)task).setPromise(promise);
     }
 
 }

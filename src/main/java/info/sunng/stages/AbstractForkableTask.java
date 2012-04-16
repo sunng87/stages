@@ -11,19 +11,19 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Date: 4/12/12
  * Time: 3:26 PM
  */
-public abstract class ForkableTask extends AbstractTask {
+public abstract class AbstractForkableTask extends AbstractTask {
 
     private Map<String, Object> taskContext = new ConcurrentHashMap<String, Object>();
 
     protected AtomicInteger taskCount;
 
-    private List<ForkedSubTask> subTaskList ;
+    private List<AbstractForkedSubTask> subTaskList ;
 
-    public ForkableTask(ForkedSubTask... tasks){
+    public AbstractForkableTask(AbstractForkedSubTask... tasks){
         taskCount = new AtomicInteger(tasks.length);
 
-        subTaskList = new ArrayList<ForkedSubTask>(taskCount.intValue());
-        for (ForkedSubTask subTask : tasks) {
+        subTaskList = new ArrayList<AbstractForkedSubTask>(taskCount.intValue());
+        for (AbstractForkedSubTask subTask : tasks) {
             subTaskList.add(subTask);
         }
 
@@ -31,7 +31,7 @@ public abstract class ForkableTask extends AbstractTask {
 
     @Override
     protected void doRun() throws Exception {
-        for (ForkedSubTask subTask : subTaskList){
+        for (AbstractForkedSubTask subTask : subTaskList){
             getCurrentStage().assign(subTask);
         }
     }

@@ -7,15 +7,15 @@ import java.util.Collection;
  * Date: 4/12/12
  * Time: 3:27 PM
  */
-public abstract class ForkedSubTask extends AbstractTask implements TaskContext{
+public abstract class AbstractForkedSubTask extends AbstractTask implements TaskContext{
 
-    private ForkableTask parentTask;
+    private AbstractForkableTask parentTask;
 
-    public void setParentTask(ForkableTask task) {
+    public void setParentTask(AbstractForkableTask task) {
         this.parentTask = task;
     }
 
-    public ForkableTask getParentTask() {
+    public AbstractForkableTask getParentTask() {
         return this.parentTask;
     }
 
