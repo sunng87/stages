@@ -1,6 +1,7 @@
 package info.sunng.stages;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -17,7 +18,7 @@ public abstract class AbstractTask implements Task, TaskContext {
 
     private Map<String, Object> taskContext = new HashMap<String, Object>();
 
-    Logger logger;
+    protected static Logger logger = LoggerFactory.getLogger(AbstractTask.class);
 
     Stage stage;
 
@@ -27,16 +28,25 @@ public abstract class AbstractTask implements Task, TaskContext {
     public void run() {
         onTaskStart();
         try {
+            if (logger.isTraceEnabled()) {
+                logger.trace(this.getClass().getSimpleName() + "started.");
+            }
             doRun();
             onTaskSuccess();
+            if (logger.isTraceEnabled()) {
+                logger.trace(this.getClass().getSimpleName() + "succeed.");
+            }
         } catch (Exception e) {
-            if (logger != null && logger.isDebugEnabled()) {
+            if (logger.isDebugEnabled()) {
                 logger.debug("Error execute task", e);
             }
             onTaskFailure(new TaskException(e));
         } finally {
             getCurrentStage().taskComplete();
             onTaskFinished();
+            if (logger.isTraceEnabled()) {
+                logger.trace(this.getClass().getSimpleName() + "finished.");
+            }
         }
     }
 
@@ -59,10 +69,6 @@ public abstract class AbstractTask implements Task, TaskContext {
     protected void onTaskSuccess() {}
 
     protected void onTaskStart() {}
-
-    public void setLogger(Logger logger) {
-        this.logger = logger;
-    }
 
     public Stage getCurrentStage() {
         return stage;
