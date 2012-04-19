@@ -1,7 +1,5 @@
 package info.sunng.stages.transaction;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
