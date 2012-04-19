@@ -49,5 +49,11 @@
         </plugins>
     </build>
 
+    <scm>
+        <connection>scm:git:git@github.com:sunng87/stages.git</connection>
+        <developerConnection>scm:git:git@github.com:sunng87/stages.git</developerConnection>
+        <url>git@github.com:sunng87/stages.git</url>
+    </scm>
+
     
 </project>
