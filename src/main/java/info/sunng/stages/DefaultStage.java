@@ -1,6 +1,9 @@
 package info.sunng.stages;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -10,6 +13,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Time: 11:09 AM
  */
 public class DefaultStage implements Stage {
+    
+    private static Logger logger = LoggerFactory.getLogger(DefaultStage.class);
 
     private StageManager stageManager;
 
@@ -27,14 +32,6 @@ public class DefaultStage implements Stage {
 
     public void setThreadPool(ExecutorService threadPool) {
         this.threadPool = threadPool;
-    }
-
-    public AtomicInteger getTaskCount() {
-        return taskCount;
-    }
-
-    public void setTaskCount(AtomicInteger taskCount) {
-        this.taskCount = taskCount;
     }
 
     public DefaultStage(String name, ExecutorService threadPool) {
@@ -66,7 +63,7 @@ public class DefaultStage implements Stage {
 
     @Override
     public synchronized void stop() {
-        getThreadPool().shutdownNow();
+        getThreadPool().shutdown();
     }
 
     @Override
@@ -79,7 +76,12 @@ public class DefaultStage implements Stage {
             throw new IllegalStateException("Stage " + name + " is inactive.");
         }
 
-        taskCount.incrementAndGet();
+        taskCount.getAndIncrement();
+        if (logger.isTraceEnabled()) {
+            logger.trace("Stage {} pending tasks: {}",
+                    name, taskCount.intValue());
+        }
+
         t.setCurrentStage(this);
 
         getThreadPool().submit(t);
@@ -93,12 +95,12 @@ public class DefaultStage implements Stage {
 
     @Override
     public int pendingTasks() {
-        return getTaskCount().intValue();
+        return taskCount.intValue();
     }
 
     @Override
     public void taskComplete() {
-        taskCount.decrementAndGet();
+        taskCount.getAndDecrement();
     }
 
     @Override
