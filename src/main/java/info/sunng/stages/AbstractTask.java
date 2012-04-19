@@ -80,13 +80,13 @@ public abstract class AbstractTask implements Task, TaskContext {
 
 
     protected void forward(String stageName, Task task) {
-        getCurrentStage().getStageManager().getStage(stageName).assign(task);
         if (task instanceof  TaskContext) {
             TaskContext taskWithContext = (TaskContext) task;
             for (String key: taskContext.keySet()) {
                 taskWithContext.setAttribute(key, this.getAttribute(key, Object.class));
             }
         }
+        getCurrentStage().getStageManager().getStage(stageName).assign(task);
     }
 
     @Override
