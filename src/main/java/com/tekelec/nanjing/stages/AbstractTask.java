@@ -24,8 +24,14 @@ public abstract class AbstractTask implements Task, TaskContext {
 
     private TaskCallback callback = null;
 
+    private boolean cancelled = false;
+
     @Override
     public void run() {
+        if (cancelled) {
+            return ;
+        }
+
         onTaskStart();
         try {
             if (logger.isTraceEnabled()) {
@@ -103,5 +109,12 @@ public abstract class AbstractTask implements Task, TaskContext {
     @Override
     public void setAttribute(String name, Object value) {
         taskContext.put(name, value);
+    }
+
+    @Override
+    public void cancel() {
+        this.cancelled = true;
+
+        //TODO decrease stage task count
     }
 }

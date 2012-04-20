@@ -13,4 +13,9 @@ public interface Task extends Runnable {
      */
     public void setCurrentStage(Stage stage);
 
+    /**
+     * cancel the task before it's executed
+     */
+    public void cancel();
+
 }
