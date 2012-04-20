@@ -30,6 +30,11 @@ public abstract class AbstractForkableTask extends AbstractTask {
 
     }
 
+    public AbstractForkableTask(List<AbstractForkedSubTask> tasks) {
+        this.subTaskList = tasks;
+        this.taskCount = new AtomicInteger(tasks.size());
+    }
+
     @Override
     protected void doRun() throws Exception {
         for (AbstractForkedSubTask subTask : subTaskList){
