@@ -13,7 +13,7 @@ public abstract class AbstractPromiseTask<T> extends AbstractTask {
         return promise;
     }
 
-    public void setPromise(Promise promise) {
+    public void setPromise(Promise<T> promise) {
         this.promise = promise;
     }
 
