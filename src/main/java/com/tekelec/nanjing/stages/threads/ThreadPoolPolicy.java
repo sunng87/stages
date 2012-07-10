@@ -1,6 +1,8 @@
 package com.tekelec.nanjing.stages.threads;
 
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.RejectedExecutionHandler;
 
 /**
  * User: Sun Ning
@@ -12,5 +14,13 @@ public interface ThreadPoolPolicy {
     public void setName(String name);
 
     public ExecutorService getThreadPool();
+
+    public RejectedExecutionHandler getRejectedExecutionHandler();
+
+    public void setRejectedExecutionHandler(RejectedExecutionHandler rejectedExecutionHandler);
+
+    public abstract void setBackedQueue(BlockingQueue<Runnable> backedQueue);
+
+    public abstract BlockingQueue<Runnable> getBackedQueue();
 
 }

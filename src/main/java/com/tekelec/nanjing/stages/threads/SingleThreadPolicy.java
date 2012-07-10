@@ -1,7 +1,8 @@
 package com.tekelec.nanjing.stages.threads;
 
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * User: Sun Ning
@@ -12,6 +13,8 @@ public class SingleThreadPolicy extends AbstractThreadPoolPolicy {
 
     @Override
     public ExecutorService getThreadPool() {
-        return Executors.newSingleThreadExecutor(new NamedThreadFactory(getName()));
+        return new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS,
+                getBackedQueue(), new NamedThreadFactory(getName()),
+                getRejectedExecutionHandler());
     }
 }

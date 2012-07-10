@@ -1,7 +1,6 @@
 package com.tekelec.nanjing.stages.threads;
 
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -32,6 +31,7 @@ public class ExtensiableThreadPoolPolicy extends AbstractThreadPoolPolicy {
     @Override
     public ExecutorService getThreadPool() {
         return new ThreadPoolExecutor(coreSize, maxSize, timeout, TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<Runnable>(), new NamedThreadFactory(getName()));
+                this.getBackedQueue(), new NamedThreadFactory(getName()),
+                this.getRejectedExecutionHandler());
     }
 }

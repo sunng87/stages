@@ -1,20 +1,17 @@
 package com.tekelec.nanjing.stages.threads;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 /**
  * User: Sun Ning
  * Date: 7/16/11
  * Time: 12:07 PM
  */
-public class SingleThreadPerCorePolicy extends AbstractThreadPoolPolicy {
+public class SingleThreadPerCorePolicy extends FixedThreadPoolPolicy {
 
-    @Override
-    public ExecutorService getThreadPool() {
+    public SingleThreadPerCorePolicy() {
         Runtime runtime = Runtime.getRuntime();
         int cores = runtime.availableProcessors();
 
-        return Executors.newFixedThreadPool(cores, new NamedThreadFactory(getName()));
+        setSize(cores);
     }
+
 }
