@@ -14,7 +14,8 @@ import java.util.Map;
  * Date: 7/16/11
  * Time: 10:40 AM
  */
-public abstract class AbstractTask implements Task, TaskContext {
+public abstract class AbstractTask implements Task, TaskContext,
+        Comparable<AbstractTask> {
 
     private Map<String, Object> taskContext = new HashMap<String, Object>();
 
@@ -25,6 +26,8 @@ public abstract class AbstractTask implements Task, TaskContext {
     private TaskCallback callback = null;
 
     private boolean cancelled = false;
+
+    private int priority = 0;
 
     @Override
     public void run() {
@@ -116,5 +119,21 @@ public abstract class AbstractTask implements Task, TaskContext {
         this.cancelled = true;
 
         //TODO decrease stage task count
+    }
+
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    @Override
+    public int compareTo(AbstractTask that) {
+        return this.getPriority() == that.getPriority() ?
+                0 : (this.getPriority() > that.getPriority() ? 1 : -1);
+
     }
 }
