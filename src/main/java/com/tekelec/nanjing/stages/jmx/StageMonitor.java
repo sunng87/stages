@@ -15,7 +15,7 @@ public class StageMonitor implements DynamicMBean {
     private StageManager sm;
 
     public StageMonitor(StageManager sm) {
-
+        this.sm = sm;
     }
 
     private String[] getStages() {
