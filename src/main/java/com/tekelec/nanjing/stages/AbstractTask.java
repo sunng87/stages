@@ -2,6 +2,7 @@ package com.tekelec.nanjing.stages;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.perf4j.slf4j.Slf4JStopWatch;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -35,13 +36,16 @@ public abstract class AbstractTask implements Task, TaskContext,
             return ;
         }
 
+        Slf4JStopWatch watch = new Slf4JStopWatch(stage.getName());
         onTaskStart();
         try {
             if (logger.isTraceEnabled()) {
                 logger.trace(this.getClass().getSimpleName() + "started.");
             }
+            watch.start();
             doRun();
             onTaskSuccess();
+            watch.stop();
             if (logger.isTraceEnabled()) {
                 logger.trace(this.getClass().getSimpleName() + "succeed.");
             }
@@ -50,6 +54,7 @@ public abstract class AbstractTask implements Task, TaskContext,
                 logger.debug("Error execute task", e);
             }
             onTaskFailure(new TaskException(e));
+            watch.stop(stage.getName() + ":exception");
         } finally {
             getCurrentStage().taskComplete();
             onTaskFinished();
