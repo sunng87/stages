@@ -1,4 +1,4 @@
-package com.tekelec.nanjing.stages.sample;
+package com.tekelec.nanjing.stages.example;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.*;
@@ -6,7 +6,6 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
 import com.tekelec.nanjing.stages.AbstractTask;
-import com.tekelec.nanjing.stages.TaskException;
 
 import java.io.InputStream;
 import java.util.concurrent.CountDownLatch;

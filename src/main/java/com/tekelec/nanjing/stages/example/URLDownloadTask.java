@@ -1,4 +1,4 @@
-package com.tekelec.nanjing.stages.sample;
+package com.tekelec.nanjing.stages.example;
 
 import com.tekelec.nanjing.stages.AbstractRetryableTask;
 import com.tekelec.nanjing.stages.TaskException;
