@@ -1,11 +1,15 @@
 package com.tekelec.nanjing.stages.example;
 
+import java.lang.management.ManagementFactory;
 import java.util.concurrent.CountDownLatch;
 
 import com.tekelec.nanjing.stages.DefaultStageManager;
 import com.tekelec.nanjing.stages.StageManager;
+import com.tekelec.nanjing.stages.jmx.StageMonitor;
 import com.tekelec.nanjing.stages.threads.FixedThreadPoolPolicy;
 import com.tekelec.nanjing.stages.threads.SingleThreadPerCorePolicy;
+
+import javax.management.ObjectName;
 
 /**
  * User: Sun Ning
@@ -33,8 +37,11 @@ public class Main {
         return sm;
     }
 
-    public static void main(String args[]) {
+    public static void main(String args[]) throws Exception {
         StageManager sm = setUpStages();
+        ManagementFactory.getPlatformMBeanServer().registerMBean(
+                new StageMonitor(sm),
+                new ObjectName("com.tekelec.nanjing.stages:type=StageMonitor"));
         CountDownLatch cdl = new CountDownLatch(TASK_COUNT);
 
         int idCodeBase = 6397550;

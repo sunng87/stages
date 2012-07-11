@@ -3,6 +3,7 @@ package com.tekelec.nanjing.stages.example;
 import com.tekelec.nanjing.stages.AbstractRetryableTask;
 import com.tekelec.nanjing.stages.TaskException;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
@@ -36,7 +37,8 @@ public class URLDownloadTask extends AbstractRetryableTask {
     @Override
     protected void doRun() throws MalformedURLException, TaskException {
         try {
-            System.out.println(url);
+            // a little sleep
+            Thread.sleep(2000);
             URL requestUrl = new URL(url);
             HttpURLConnection conn = (HttpURLConnection)requestUrl.openConnection();
             conn.setDoInput(true);
@@ -49,9 +51,13 @@ public class URLDownloadTask extends AbstractRetryableTask {
             forward(Main.PARSER_STAGE, task);
             System.out.println("Finished retriving: " + url);
         } catch (IOException e) {
-            setRetry(true);
+            if (!(e instanceof FileNotFoundException)){
+                setRetry(true);
+            }
             e.printStackTrace();
             throw new TaskException(e);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
